@@ -2673,7 +2673,7 @@ def swap_py_operators(pycode_as_deque: deque, **config_options) -> deque:
     Specifically, swaps "*", "**", and "%" for "\\cdot", "^", and "\\bmod",
     respectively.
     """
-    print(pycode_as_deque)
+    # print(pycode_as_deque)
     # show = 0
     # if pycode_as_deque[0] == "=":
     #     show  = 1
