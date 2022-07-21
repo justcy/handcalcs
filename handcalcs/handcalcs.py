@@ -2087,6 +2087,8 @@ def swap_symbolic_calcs(
         swap_superscripts,
         flatten_deque,
     ]
+    if symbolic_expression[0] == "=":
+        config_options['show'] = 1
     for function in functions_on_symbolic_expressions:
         # breakpoint()
         if function is swap_math_funcs:
@@ -2121,6 +2123,8 @@ def swap_numeric_calcs(
         extend_subscripts,
         flatten_deque,
     ]
+    if numeric_expression[0] == "=":
+        config_options['show'] = 1
     for function in functions_on_numeric_expressions:
         if function is swap_values or function is swap_math_funcs:
             numeric_expression = function(
@@ -2663,21 +2667,34 @@ def swap_func_name(d: deque, old: str, new: str = "", **config_options) -> deque
             swapped_deque.append(elem)
     return swapped_deque
 
-
 def swap_py_operators(pycode_as_deque: deque, **config_options) -> deque:
     """
     Swaps out Python mathematical operators that do not exist in Latex.
     Specifically, swaps "*", "**", and "%" for "\\cdot", "^", and "\\bmod",
     respectively.
     """
+    print(pycode_as_deque)
+    # show = 0
+    # if pycode_as_deque[0] == "=":
+    #     show  = 1
     swapped_deque = deque([])
+    # for idx, item in enumerate(pycode_as_deque):
+    #     next_idx = min(idx + 1, len(pycode_as_deque) - 1)
+    #     next_item = pycode_as_deque[next_idx]
+        # print("---------")
+        # print(item)
+        # print(type(next_item))
+        # print("---------")
     for item in pycode_as_deque:
         if type(item) is deque:
-            new_item = swap_py_operators(item)  # recursion!
+            if item[0] == "=":
+                config_options['show'] = 1
+            new_item = swap_py_operators(item,**config_options)  # recursion!
             swapped_deque.append(new_item)
         else:
             if item == "*":
-                swapped_deque.append("\\cdot")
+                if config_options.get("show") == 1:
+                    swapped_deque.append("×")
             elif item == "%":
                 swapped_deque.append("\\bmod")
             elif item == ",":
@@ -2828,9 +2845,12 @@ def swap_superscripts(pycode_as_deque: deque, **config_options) -> deque:
 
         else:
             if "**" == str(next_item):
-                pycode_with_supers.append(l_par)
+                # print(item+"is "+str(str(item).isdigit())+"XXX"+item)
+                if is_number(item) and float(item) < 0:
+                    pycode_with_supers.append(l_par)
                 pycode_with_supers.append(item)
-                pycode_with_supers.append(r_par)
+                if is_number(item) and float(item) < 0 :
+                    pycode_with_supers.append(r_par)
             elif str(item) == "**":
                 new_item = f"{ops}{a}"
                 pycode_with_supers.append(new_item)
