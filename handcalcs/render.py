@@ -11,7 +11,8 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-import re
+
+
 import sys
 from . import handcalcs as hand
 from . import sympy_kit as s_kit
@@ -103,10 +104,8 @@ def render(line, cell):
     # Do the handcalc conversion
     renderer = hand.LatexRenderer(cell, user_ns_postrun, line_args)
     latex_code = renderer.render()
-    latex_code = re.sub("LAMBDA","λ",latex_code)
-    # latex_code = re.sub("× ([^0-9])","\\1",latex_code)
+
     # Display, but not as an "output"
-    # print(latex_code)
     display(Latex(latex_code))
 
     if line_args["override"] == "_testing":
@@ -135,8 +134,7 @@ def tex(line, cell):
     # Do the handcalc conversion
     renderer = hand.LatexRenderer(cell, user_ns_postrun, line_args)
     latex_code = renderer.render()
-    latex_code = re.sub("LAMBDA","λ",latex_code)
-    # latex_code = re.sub("× ([^0-9])","\\1",latex_code)
+
     # Display, but not as an "output"
     print(latex_code)
 

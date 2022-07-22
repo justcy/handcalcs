@@ -609,7 +609,11 @@ def add_result_values_to_line(line_object, calculated_results: dict):
 def results_for_calcline(line_object, calculated_results):
     parameter_name = line_object.line[0]
     resulting_value = dict_get(calculated_results, parameter_name)
-    line_object.line.append(deque(["=", resulting_value]))
+  
+
+    if is_number(resulting_value):
+        resulting_value =  "{:g}".format(float(resulting_value))
+    line_object.line.append(deque(["=",resulting_value ]))
     return line_object
 
 
@@ -617,6 +621,8 @@ def results_for_calcline(line_object, calculated_results):
 def results_for_numericcalcline(line_object, calculated_results):
     parameter_name = line_object.line[0]
     resulting_value = dict_get(calculated_results, parameter_name)
+	if is_number(resulting_value):
+        resulting_value =  "{:g}".format(float(resulting_value))
     line_object.line.append(deque(["=", resulting_value]))
     return line_object
 
@@ -625,6 +631,8 @@ def results_for_numericcalcline(line_object, calculated_results):
 def results_for_longcalcline(line_object, calculated_results):
     parameter_name = line_object.line[0]
     resulting_value = dict_get(calculated_results, parameter_name)
+	if is_number(resulting_value):
+        resulting_value =  "{:g}".format(float(resulting_value))
     line_object.line.append(deque(["=", resulting_value]))
     return line_object
 
