@@ -103,6 +103,7 @@ def render(line, cell):
     # Do the handcalc conversion
     renderer = hand.LatexRenderer(cell, user_ns_postrun, line_args)
     latex_code = renderer.render()
+    latex_code = re.sub("LAMBDA","λ",latex_code)
     # latex_code = re.sub("× ([^0-9])","\\1",latex_code)
     # Display, but not as an "output"
     # print(latex_code)
@@ -134,6 +135,7 @@ def tex(line, cell):
     # Do the handcalc conversion
     renderer = hand.LatexRenderer(cell, user_ns_postrun, line_args)
     latex_code = renderer.render()
+    latex_code = re.sub("LAMBDA","λ",latex_code)
     # latex_code = re.sub("× ([^0-9])","\\1",latex_code)
     # Display, but not as an "output"
     print(latex_code)
